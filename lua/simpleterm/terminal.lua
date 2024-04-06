@@ -118,7 +118,7 @@ local function toggle(type)
   local term = get_open_term_with_type(type) or get_last_term_with_type(type)
 
   if not term then
-    term = simpleterm.new(type)
+    term = new(type)
   elseif windows[type] then
     close_win(type)
   else
