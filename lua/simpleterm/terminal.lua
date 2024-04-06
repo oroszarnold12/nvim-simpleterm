@@ -111,7 +111,7 @@ simpleterm.new = function(type, shell_override)
   return term
 end
 
-simpleterm.toggle = function(type)
+local function toggle(type)
   windows = util.verify_windows(windows)
   terminals = util.verify_terminals(terminals)
 
@@ -125,6 +125,18 @@ simpleterm.toggle = function(type)
     local win = create_win(type)
     show_term_in_win(term, win)
   end
+end
+
+simpleterm.toggle_vertical = function()
+  toggle("vertical")
+end
+
+simpleterm.toggel_horizontal = function()
+  toggle("horizontal")
+end
+
+simpleterm.toggle_floating = function ()
+  toggle("floating")
 end
 
 simpleterm.next_term_buffer = function()

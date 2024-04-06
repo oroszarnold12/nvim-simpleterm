@@ -4,6 +4,14 @@ local defaults = {
   type_opts = {
     horizontal = { location = "rightbelow", split_ratio = 0.3 },
     vertical = { location = "rightbelow", split_ratio = 0.5 },
+    floating = {
+      relative = "editor",
+      row = 0.3,
+      col = 0.25,
+      width = 0.5,
+      height = 0.4,
+      border = "single",
+    },
   },
   behavior = {
     autoclose_on_quit = {

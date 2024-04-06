@@ -1,20 +1,34 @@
 local util = {}
 local a = vim.api
 
-util.get_split_dimensions= function(type, ratio)
+local function get_floating_dimensions(opts)
+  return {
+    relative = "editor",
+    width = math.ceil(opts.width * vim.o.columns),
+    height = math.ceil(opts.height * vim.o.lines),
+    row = math.floor(opts.row * vim.o.lines),
+    col = math.floor(opts.col * vim.o.columns),
+    border = opts.border,
+  }
+end
+
+local function get_split_dimensions(type, ratio)
   local get_dimension = type == "horizontal" and a.nvim_win_get_height or a.nvim_win_get_width
   return math.floor(get_dimension(0) * ratio)
 end
 
 util.split = function(type, config)
   local opts = config.type_opts[type]
-  local dimensions = util.get_split_dimensions(type, opts.split_ratio)
+  local dimensions = type ~= "floating" and get_split_dimensions(type, opts.split_ratio) or get_floating_dimensions(opts)
   local create_split = {
     horizontal = function()
       vim.cmd(opts.location .. dimensions .. " split")
     end,
     vertical = function()
       vim.cmd(opts.location .. dimensions .. " vsplit")
+    end,
+    floating = function()
+      a.nvim_open_win(0, true, dimensions)
     end,
   }
 
