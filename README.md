@@ -62,3 +62,11 @@ require("simpleterm.terminal").new_horizontal()
 require("simpleterm.terminal").new_vertical()
 require("simpleterm.terminal").new_floating()
 ```
+
+#### Switch between terminals 
+
+It is possible to spawn multiple horizontal/vertical/floating terminals. You can cycle through the different terminals inside the current window in order by calling the following function
+
+```lua
+require("simpleterm.terminal").next_term_buffer()
+```
