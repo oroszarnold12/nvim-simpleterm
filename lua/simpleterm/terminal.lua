@@ -95,7 +95,7 @@ local function create_buf()
 end
 
 
-simpleterm.new = function(type, shell_override)
+local function new(type, shell_override)
   windows = util.verify_windows(windows)
   terminals = util.verify_terminals(terminals)
 
@@ -135,8 +135,20 @@ simpleterm.toggle_horizontal = function()
   toggle("horizontal")
 end
 
-simpleterm.toggle_floating = function ()
+simpleterm.toggle_floating = function()
   toggle("floating")
+end
+
+simpleterm.new_vertical = function(shell_override)
+  new("vertical", shell_override)
+end
+
+simpleterm.new_horizontal = function(shell_override)
+  new("horizontal", shell_override)
+end
+
+simpleterm.new_floating= function(shell_override)
+  new("floating", shell_override)
 end
 
 simpleterm.next_term_buffer = function()
