@@ -131,7 +131,7 @@ simpleterm.toggle_vertical = function()
   toggle("vertical")
 end
 
-simpleterm.toggel_horizontal = function()
+simpleterm.toggle_horizontal = function()
   toggle("horizontal")
 end
 
