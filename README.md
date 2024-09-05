@@ -1,8 +1,8 @@
-# Neovim terminal Plugin (inspired by NvChad/nvterm)
+# Neovim terminal Plugin (inspired by [NvChad/nvterm](https://github.com/zbirenbaum/nvterm))
 
 ## Install
 
-- Simply install the plugin with lazy.nvim as you would for any other:
+[lazy.nvim](https://github.com/folke/lazy.nvim)
 
 ```lua
 {
@@ -45,7 +45,7 @@ require("nvterm").setup({
 
 ### Functions
 
-Use the below functions to map them for keybindings
+Map the functions below to your prefered keys
 
 #### Toggle
 
@@ -65,8 +65,31 @@ require("simpleterm.terminal").new_floating()
 
 #### Switch between terminals 
 
-It is possible to spawn multiple horizontal/vertical/floating terminals. You can cycle through the different terminals inside the current window in order by calling the following function
+It is possible to spawn multiple horizontal/vertical/floating terminals. You can cycle through the different terminals inside the current window with the function below
 
 ```lua
 require("simpleterm.terminal").next_term_buffer()
+```
+
+### Recommended Configuration
+```lua
+{
+  "oroszarnold12/nvim-simpleterm",
+  keys = { "<A-h>", "<A-v>", "<A-i>", "<leader>h", "<leader>v", "<leader>i" },
+  config = function()
+    require("simpleterm").setup()
+    local term = require("simpleterm.terminal")
+
+    vim.keymap.set("t", "<S-TAB>", term.next_term_buffer, { desc = "Next Terminal Buffer" })
+    vim.keymap.set("t", "<A-h>", term.toggle_horizontal, { desc = "Toggle Horizontal Terminal" })
+    vim.keymap.set("t", "<A-v>", term.toggle_vertical, { desc = "Toggle Vertical Terminal" })
+    vim.keymap.set("t", "<A-i>", term.toggle_floating, { desc = "Toggle Floating Terminal" })
+    vim.keymap.set("n", "<A-h>", term.toggle_horizontal, { desc = "Toggle Horizontal Terminal" })
+    vim.keymap.set("n", "<A-v>", term.toggle_vertical, { desc = "Toggle Vertical Terminal" })
+    vim.keymap.set("n", "<A-i>", term.toggle_floating, { desc = "Toggle Floating Terminal" })
+    vim.keymap.set("n", "<leader>h", term.new_horizontal, { desc = "New Horizontal Terminal" })
+    vim.keymap.set("n", "<leader>v", term.new_vertical, { desc = "New Vertical Terminal" })
+    vim.keymap.set("n", "<leader>i", term.new_floating, { desc = "new Floating Terminal" })
+  end,
+}
 ```
