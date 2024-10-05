@@ -26,12 +26,13 @@ local defaults = {
 local set_behavior = function(behavior)
 	if behavior.autoclose_on_quit.enabled then
 		local function close_buffers()
-			require("simpleterm.terminal").close_buffers()
+			require("simpleterm.term_util").close_term_buffers()
 			vim.api.nvim_command("qa")
 		end
+
 		vim.api.nvim_create_autocmd({ "WinClosed" }, {
 			callback = vim.schedule_wrap(function()
-				local open_term_windows = require("simpleterm.terminal").get_windows()
+				local open_term_windows = require("simpleterm.win_util").get_wins()
 
 				local non_term_windows = vim.tbl_filter(function(win)
 					return not vim.tbl_contains(open_term_windows, win)
