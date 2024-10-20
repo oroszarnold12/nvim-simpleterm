@@ -1,3 +1,4 @@
+local term_list = require("simpleterm.term_list")
 local M = {}
 
 M._terms = {}
@@ -55,13 +56,15 @@ M.create_and_show_term = function(type, win, config, shell_override)
 	local terms = M._terms[type] or {}
 	local id = #terms + 1
 	local buf = vim.api.nvim_create_buf(false, true)
-	local term = { id = id, buf = buf, open = true, type = type }
+	local shell = config.shell or shell_override or vim.o.shell
+	local term = { id = id, buf = buf, open = true, type = type, shell = shell }
 
 	terms[id] = term
 	M._terms[type] = terms
 
-	vim.api.nvim_win_set_buf(win, term.buf)
-	vim.fn.termopen(config.shell or shell_override or vim.o.shell)
+	term_list.render_term_names(win.list_win, M._terms[type])
+	vim.api.nvim_win_set_buf(win.term_win, term.buf)
+	vim.fn.termopen(shell)
 	vim.cmd("startinsert")
 end
 
@@ -71,7 +74,8 @@ M.toggle_term_in_win = function(type, win, config)
 	local existing_term = get_open_term(type) or get_last_term(type)
 	if existing_term then
 		M._terms[type][existing_term.id].open = true
-		vim.api.nvim_win_set_buf(win, existing_term.buf)
+		term_list.render_term_names(win.list_win, M._terms[type])
+		vim.api.nvim_win_set_buf(win.term_win, existing_term.buf)
 		vim.cmd("startinsert")
 	else
 		M.create_and_show_term(type, win, config)
@@ -107,7 +111,8 @@ M.switch_to_next_term = function(type, win)
 	if next_term then
 		M._terms[type][open_term.id].open = false
 		M._terms[type][next_term.id].open = true
-		vim.api.nvim_win_set_buf(win, next_term.buf)
+		term_list.render_term_names(win.list_win, M._terms[type])
+		vim.api.nvim_win_set_buf(win.term_win, next_term.buf)
 		vim.cmd("startinsert")
 	end
 end

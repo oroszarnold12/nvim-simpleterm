@@ -52,11 +52,18 @@ M.next_term_buffer = function()
 		return
 	end
 
-	term_util.switch_to_next_term(type, current_win)
+	local win = win_util.get_win(type)
+	term_util.switch_to_next_term(type, win)
 end
 
 M.init = function(conf)
 	config = conf
+
+	vim.api.nvim_create_autocmd({ "WinClosed" }, {
+		callback = vim.schedule_wrap(function()
+			win_util.verify_wins()
+		end),
+	})
 end
 
 return M

@@ -2,8 +2,8 @@ local M = {}
 
 local defaults = {
 	type_opts = {
-		horizontal = { location = "rightbelow", split_ratio = 0.3 },
-		vertical = { location = "rightbelow", split_ratio = 0.5 },
+		horizontal = { location = "rightbelow", split_ratio = 0.3, list_width = 15 },
+		vertical = { location = "rightbelow", split_ratio = 0.5, list_width = 15 },
 		floating = {
 			relative = "editor",
 			row = 0.3,
@@ -11,6 +11,7 @@ local defaults = {
 			width = 0.5,
 			height = 0.4,
 			border = "single",
+			list_width = 15,
 		},
 	},
 	behavior = {
